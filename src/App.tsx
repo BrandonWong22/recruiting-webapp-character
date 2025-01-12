@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import { ATTRIBUTE_LIST, CLASS_LIST, SKILL_LIST } from './consts'; // i had to edit the import to make it work for me
 import { Attributes } from './types';
+import { getModifier } from './helperFunctions';
 
 function App() {
   const [attributes, setAttributes] = useState({
@@ -53,9 +54,11 @@ function App() {
       <section className="App-section">
         <div className='attribute-controls' style={{marginBottom: '10px'}}>
           {ATTRIBUTE_LIST.map((attribute) => {
+              const value = attributes[attribute as keyof Attributes];
+              const modifier = getModifier(value);
             return (
               <div key={attribute}>
-                <strong style={{marginRight: "8px"}}>{attribute}: {attributes[attribute]}</strong>
+                <strong style={{marginRight: "8px"}}>{attribute}: {attributes[attribute]} <em>(Modifier: {modifier >= 0 ? `+${modifier}` : modifier})</em> </strong>
                 <button onClick={() => incrementAttribute(attribute)}>+</button>
                 <button onClick={() => decrementAttribute(attribute)}>-</button>
               </div>
