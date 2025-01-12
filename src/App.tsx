@@ -153,11 +153,6 @@ function App() {
               (skill: { name: string; attributeModifier: string }) => {
                 const { name, attributeModifier } = skill;
                 const modifier = getModifier(attributes[attributeModifier]);
-                // const totalSkillPointsSpent = Object.values(skillPoints).reduce(
-                //   (acc, points) => acc + points,
-                //   0
-                // );
-                console.log(totalSkillPointsSpent);
                 return (
                   <li key={name} className="skill-item">
                     {name}: {skillPoints[name]} (Modifier: {attributeModifier}:{" "}
