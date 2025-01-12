@@ -44,3 +44,22 @@
     transform: rotate(360deg);
   }
 }
+
+li {
+  list-style-type:none;
+  padding: 0;
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+.class-list-classname {
+  cursor: pointer;
+}
+
+.clear-selection-button {
+  cursor: pointer;
+}

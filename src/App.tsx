@@ -12,6 +12,7 @@ function App() {
     Wisdom: 0,
     Charisma: 0,
   });
+  const [selectedClass, setSelectedClass] = useState('');
 
   const incrementAttribute = (attribute: string) => {
     setAttributes((prev) => ({
@@ -61,16 +62,33 @@ function App() {
             )
           })}
         </div>
-        <div className='class-list'>
-        {Object.entries(CLASS_LIST).map(([className, requirements]) => {
-          const meetsRequirements = meetsClassRequirements(requirements)
-          return (
-            <div key={className}>
-              <strong style={{color: meetsRequirements && 'green'}}>{className}</strong>
-            </div>
-          );
-        })}
+        <div className='class-list' style={{marginBottom: '10px'}}>
+          {Object.entries(CLASS_LIST).map(([className, requirements]) => {
+            const meetsRequirements = meetsClassRequirements(requirements)
+            return (
+              <div key={className}>
+                <strong className='class-list-classname' onClick={() => setSelectedClass(className)} style={{color: meetsRequirements && 'green'}}>{className}</strong>
+              </div>
+            );
+          })}
+          <button className='clear-selection-button' onClick={() => setSelectedClass('')}>Clear Selection</button>
         </div>
+        {
+          selectedClass && (
+            <div>
+              <h2>{selectedClass} Minimum Requirements</h2>
+              <ul>
+                {ATTRIBUTE_LIST.map((attribute) => {
+                  return (
+                    <li key={attribute}>
+                      <strong>{attribute} {CLASS_LIST[selectedClass][attribute]}</strong>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )
+        }
       </section>
     </div>
   );
