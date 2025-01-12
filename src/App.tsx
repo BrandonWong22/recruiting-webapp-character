@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import { ATTRIBUTE_LIST, CLASS_LIST, SKILL_LIST } from './consts'; // i had to edit the import to make it work for me
+import { Attributes } from './types';
 
 function App() {
   const [attributes, setAttributes] = useState({
@@ -26,13 +27,30 @@ function App() {
     }));
   }
 
+  const meetsClassRequirements = (requirements: Attributes): boolean => {
+    const {Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma} = requirements;
+    
+    if (
+      attributes.Strength >= Strength &&
+      attributes.Dexterity >= Dexterity &&
+      attributes.Constitution >= Constitution &&
+      attributes.Intelligence >= Intelligence &&
+      attributes.Wisdom >= Wisdom &&
+      attributes.Charisma >= Charisma
+    ) {
+      return true
+    }
+
+    return false
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>React Coding Exercise</h1>
       </header>
       <section className="App-section">
-        <div className='attribute-controls'>
+        <div className='attribute-controls' style={{marginBottom: '10px'}}>
           {ATTRIBUTE_LIST.map((attribute) => {
             return (
               <div key={attribute}>
@@ -42,6 +60,16 @@ function App() {
               </div>
             )
           })}
+        </div>
+        <div className='class-list'>
+        {Object.entries(CLASS_LIST).map(([className, requirements]) => {
+          const meetsRequirements = meetsClassRequirements(requirements)
+          return (
+            <div key={className}>
+              <strong style={{color: meetsRequirements && 'green'}}>{className}</strong>
+            </div>
+          );
+        })}
         </div>
       </section>
     </div>
